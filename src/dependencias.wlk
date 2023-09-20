@@ -1,8 +1,10 @@
 import rodados.*
+import pedidos.*
 
 class Dependencia  {
 	var property cantidadEmpleado = 0
 	const rodados = []
+	const pedido = []
 	
 	method agregarAFlota(rodado) {
 		rodados.add(rodado)
@@ -58,4 +60,10 @@ class Dependencia  {
 		return cantidadEmpleado >= 40 and rodados.size() >= 5
 	}
 	
+	method ningunoSatisface(pedido) {
+		return not rodados.any(r => pedido.puedeSerSatisfechoPor(r))
+	}
+	method pedidosInsatisfechos(){
+		return pedidos.filter(p => self.ningunoSatisface(p))
+	}
 }
