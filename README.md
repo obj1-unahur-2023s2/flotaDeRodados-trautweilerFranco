@@ -47,97 +47,175 @@ Debe ser posible enviarle los siguientes mensajes a cada objeto que representa a
 
 ### Test con dos dependencias
 
-Armar un test en el que hay que se definen dos dependencias: deportes (45 empleados) y cultura (31 empleados).
+Armar un test en el que hay que se definen dos dependencias: 
+deportes (45 empleados) y cultura (31 empleados).
 	
-En este test debe definirse un rodado al que llamaremos _cachito_; o sea, definir `var cachito = ...`.
+En este test debe definirse un rodado al que 
+llamaremos _cachito_; o sea, definir `var cachito = ...`.
 Este rodado debe ser un Corsa de color rojo.
 	
-La flota de deportes incluye a: `cachito`, un Corsa azul, un Corsa verde, un Kwid con el tanque adicional puesto; y un auto especial con estas características: capacidad 5 pasajeros, velocidad máxima 160 km/h, peso 1200 kg, color beige.
+La flota de deportes incluye a: `cachito`, un Corsa azul, 
+un Corsa verde, un Kwid con el tanque adicional puesto; y 
+un auto especial con estas características: 
+capacidad 5 pasajeros, velocidad máxima 160 km/h, 
+peso 1200 kg, color beige.
 	
-Por su parte, cultura cuenta con: `cachito`; dos Kwid con el tanque adicional puesto; un Kwid más, este sin el tanque adicional;  y la Trafic, configurada con el interior popular y el motor batatón.
+Por su parte, cultura cuenta con: `cachito`; dos Kwid con el 
+tanque adicional puesto; un Kwid más, este sin el tanque 
+adicional;  y la Trafic, configurada con el interior popular 
+y el motor batatón.
 	
-Notar que `cachito` forma parte de la flota de _ambas_ dependencias.
+Notar que `cachito` forma parte de la flota de 
+_ambas_ dependencias.
 
-Para cada dependencia, hacer asserts sobre: el peso total de la flota, si está o no bien equipada, la capacidad total en color azul, el color del rodado más rápido, si es grande o no, y la capacidad faltante. 
+Para cada dependencia, hacer asserts sobre: el peso total 
+de la flota, si está o no bien equipada, la capacidad total 
+en color azul, el color del rodado más rápido, si es grande o 
+no, y la capacidad faltante. 
 
-Va una ayudita: la capacidad faltante de deportes es de 25 personas (la flota puede llevar: 12 personas en los 3 Corsa, más 3 del Kwid y 5 del auto especial; total 20), mientras que la de cultura es de 5 personas (puede llevar en total 26: 6 de los Kwid con tanque adicional, más 4 de la Kwid sin tanque, más 4 de cachito, más 12 de la Trafic dado que tiene el interior popular).	
+Va una ayudita: la capacidad faltante de deportes es de 
+25 personas (la flota puede llevar: 12 personas en los 3 Corsa, 
+más 3 del Kwid y 5 del auto especial; total 20), 
+mientras que la de cultura es de 5 personas 
+(puede llevar en total 26: 6 de los Kwid con tanque adicional, 
+más 4 de la Kwid sin tanque, más 4 de cachito, más 12 de la 
+Trafic dado que tiene el interior popular).	
 
 <br/>
 
 
 ## Etapa 2: modelo de pedidos
 
-Agregar al modelo los **pedidos** de translados que se generan en la municipalidad.  
-Cada pedido especifica: la _distancia_ a recorrer (expresada en kilómetros), el _tiempo máximo_ en que se puede hacer el viaje (expresado en horas), la _cantidad de pasajeros_ a transportar, y también un conjunto de _colores incompatibles_, o sea, que los pasajeros rechazan hacer el viaje en autos de esos colores.  
-La _velocidad requerida_ de un pedido es el resultado de dividir la cantidad de kilómetros por el tiempo máximo.
-P.ej. si para un pedido de un viaje de 480 kilómetros se indica como tiempo máximo 6 horas, entonces la velocidad requerida de este pedido es de 80 kms/hora (480 / 6 = 80).   
+Agregar al modelo los **pedidos** de translados que se generan
+ en la municipalidad.  
+Cada pedido especifica: la _distancia_ a recorrer (expresada 
+en kilómetros), el _tiempo máximo_ en que se puede hacer el 
+viaje (expresado en horas), la _cantidad de pasajeros_ a 
+transportar, y también un conjunto de _colores incompatibles_,
+ o sea, que los pasajeros rechazan hacer el viaje en autos 
+ de esos colores.  
+La _velocidad requerida_ de un pedido es el resultado de 
+dividir la cantidad de kilómetros por el tiempo máximo.
+P.ej. si para un pedido de un viaje de 480 kilómetros se 
+indica como tiempo máximo 6 horas, entonces la velocidad 
+requerida de este pedido es de 80 kms/hora (480 / 6 = 80).   
 	
-Agregar la capacidad de preguntar _si un auto puede satisfacer un pedido_, enviándole un mensaje al viaje con el auto como parámetro. 
+Agregar la capacidad de preguntar _si un auto puede 
+satisfacer un pedido_, enviándole un mensaje al viaje 
+con el auto como parámetro. 
 
-Para que un auto pueda satisfacer un pedido se tienen que dar tres condiciones: 
-- que la velocidad máxima del auto sea al menos 10 km/h mayor a la velocidad requerida del pedido; 
-- que la capacidad del auto dé para la cantidad de pasajeros del viaje; y 
+Para que un auto pueda satisfacer un pedido se tienen que 
+dar tres condiciones: 
+- que la velocidad máxima del auto sea al menos 10 km/h mayor 
+a la velocidad requerida del pedido; 
+- que la capacidad del auto dé para la cantidad de pasajeros 
+del viaje; y 
 - que el auto no sea de un color incompatible para el viaje.
 
-P.ej. consideremos al auto al que llamamos `cachito` en el test de la etapa 1 (recordemos: capacidad 4 pasajeros, velocidad máxima 150 km/h, color rojo).
-- este auto puede satisfacer un pedido de 960 kms con tiempo máximo de 8 horas (lo que da una velocidad requerida de 120 km/h), para 4 pasajeros donde los colores incompatibles son azul y negro.
-- si agregamos el rojo a los colores incompatibles, o cambiamos la cantidad de pasajeros a 6, entonces `cachito` ya no puede satisfacer el pedido.
-- lo mismo si cambiamos el tiempo máximo a 6 horas, porque eso nos daría una velocidad requerida de 160 km/h.
+P.ej. consideremos al auto al que llamamos `cachito` en el 
+test de la etapa 1 (recordemos: capacidad 4 pasajeros, 
+velocidad máxima 150 km/h, color rojo).
+- este auto puede satisfacer un pedido de 960 kms con tiempo 
+máximo de 8 horas (lo que da una velocidad requerida de 
+120 km/h), para 4 pasajeros donde los colores incompatibles 
+son azul y negro.
+- si agregamos el rojo a los colores incompatibles, o 
+cambiamos la cantidad de pasajeros a 6, entonces `cachito` 
+ya no puede satisfacer el pedido.
+- lo mismo si cambiamos el tiempo máximo a 6 horas,
+ porque eso nos daría una velocidad requerida de 160 km/h.
 
 Armar un test que compruebe esta especificación.
 
 <br>
 
-Además, los objetos que representan pedidos deben entender estos mensajes: `acelerar` disminuye en uno el tiempo máximo (p.ej. lo hace pasar de 8 horas a 7), y `relajar` que lo aumenta en uno (p.ej. lo hace pasar de 8 horas a 9).
+Además, los objetos que representan pedidos deben entender 
+estos mensajes: `acelerar` disminuye en uno el tiempo máximo 
+(p.ej. lo hace pasar de 8 horas a 7), y `relajar` que lo 
+aumenta en uno (p.ej. lo hace pasar de 8 horas a 9).
 
 ## Etapa 3: registro de los pedidos de cada dependencia
 
 Agregar a cada dependencia un registro de los pedidos que hace. Se pueden agregar y quitar pedidos.
 
-Agregar lo que haga falta al modelo para que se pueda conocer, para una dependencia:
+Agregar lo que haga falta al modelo para que se pueda conocer, 
+para una dependencia:
 - el total de pasajeros en los pedidos que tiene registrados
-- _cuáles_ de los pedidos que tiene registrados no puede ser satisfecho por ninguno de los autos afectados a la dependencia.
-- dado un color, si es cierto que _todos_ los pedidos registrados lo tienen como color incompatible.
+- _cuáles_ de los pedidos que tiene registrados no puede 
+ser satisfecho por ninguno de los autos afectados a la 
+dependencia.
+- dado un color, si es cierto que _todos_ los pedidos 
+registrados lo tienen como color incompatible.
 
-También debe ser posible, enviando un mensaje al objeto que representa a una dependencia, _relajar_ todos los pedidos que tenga registrados.
+También debe ser posible, enviando un mensaje al objeto 
+que representa a una dependencia, _relajar_ todos los 
+pedidos que tenga registrados.
 
  
 
 ## Etapa 4: posiciones y Game
 
-Agregarle a los Chevrolet Corsa un atributo `position` que indique su ubicación en un mapa de coordenadas. Supongamos que el mapa incluye las posiciones desde (0,0) hasta (15,15).
-La clase `Position` "viene con Wollok", pero para usarla hay que incluir este import: 
+Agregarle a los Chevrolet Corsa un atributo `position` 
+que indique su ubicación en un mapa de coordenadas. 
+Supongamos que el mapa incluye las posiciones desde (0,0) 
+hasta (15,15).
+La clase `Position` "viene con Wollok", pero para usarla
+ hay que incluir este import: 
 ```
 import wollok.game.*
 ```
 
-Este código crea una instancia de `Position`: `new Position(x = 4, y = 7)`.
-Para ver qué mensajes entienden estos objetos, mirar en https://www.wollok.org/documentacion/wollokdoc/, entrar por "game.wlk" y buscar la clase "Position".
+Este código crea una instancia de `Position`: 
+`new Position(x = 4, y = 7)`.
+Para ver qué mensajes entienden estos objetos, 
+mirar en https://www.wollok.org/documentacion/wollokdoc/, 
+entrar por "game.wlk" y buscar la clase "Position".
 
-Otra forma de crear una instancia de `Position` es usando el objeto `game`: `game.at(4,7)`. Para usar a `game`, también hay que incluir el `import wollok.game.*`.  
+Otra forma de crear una instancia de `Position` es 
+usando el objeto `game`: `game.at(4,7)`. Para usar a `game`, 
+también hay que incluir el `import wollok.game.*`.  
 
-Agregar lo que haga falta en la clase que modela a los Corsa para que puedan responder a las consultas
-- `pasoPor(posicion)`, o sea, si alguna vez estuvo en esa posición. Ayuda: hay que agregar algo en el método que cambia la posición.
-- `pasoPorFila(numero)`, la fila es el "x" de las posiciones. P.ej. si las posiciones en donde estuvo `cachito` fueron `(3,5)`, `(3.6)`, `(3,7)` y `(4,7)`, entonces pasó por las filas 5,6 y 7, y ninguna otra.
-- `recorrioFilas(lista_de_numeros)`, o sea, si pasó por todas las filas en la lista. P.ej. `cachito.recorrioFilas([3,4,5])` tiene que dar `true` si `cachito` pasó por la fila 3, por la 4 y por la 5.
+Agregar lo que haga falta en la clase que modela a los 
+Corsa para que puedan responder a las consultas
+- `pasoPor(posicion)`, o sea, si alguna vez estuvo en esa 
+posición. Ayuda: hay que agregar algo en el método que cambia 
+la posición.
+- `pasoPorFila(numero)`, la fila es el "x" de las posiciones. 
+P.ej. si las posiciones en donde estuvo `cachito` fueron `(3,5)`,
+ `(3.6)`, `(3,7)` y `(4,7)`, entonces pasó por las 
+ filas 5,6 y 7, y ninguna otra.
+- `recorrioFilas(lista_de_numeros)`, o sea, si pasó por 
+todas las filas en la lista. P.ej. 
+`cachito.recorrioFilas([3,4,5])` tiene que dar `true` 
+si `cachito` pasó por la fila 3, por la 4 y por la 5.
 
 **Atenti**  
-para resolver las últimas tres consultas, hay que agregar algo a la memoria de los Corsa.
+para resolver las últimas tres consultas, hay que 
+agregar algo a la memoria de los Corsa.
 
 
 ### Meter un Corsa en el game
 
-Aprovechando que los Corsa ya tienen posición (es importante que se llame `position`) agregarle una imagen y armar un programa que pone un auto en un Wollok Game.  
+Aprovechando que los Corsa ya tienen posición 
+(es importante que se llame `position`) agregarle una imagen 
+y armar un programa que pone un auto en un Wollok Game.  
 Hay un programa `corsasEnElGame.wpgm`, pueden usar ese.
 
-Darle movimiento al auto con las flechas, y definir tres teclas para cambiarle el color, elegir para eso tres colores. P.ej. con "R" cambia a rojo, con "A" a azul, con "V" a verde.  
-Para esto, buscar tres imágenes de autito en colores distintos, del tamaño que le gustan a Wollok Game, o sea 50x50 píxeles.
+Darle movimiento al auto con las flechas, y definir tres teclas
+ para cambiarle el color, elegir para eso tres colores. 
+ P.ej. con "R" cambia a rojo, con "A" a azul, con "V" a verde.  
+Para esto, buscar tres imágenes de autito en colores distintos,
+ del tamaño que le gustan a Wollok Game, o sea 50x50 píxeles.
+ 
 
-Recuerden que las imágenes tienen que estar en la carpeta `assets`, dejamos una de un auto rojo para que tengan de ejemplo.
+Recuerden que las imágenes tienen que estar en la carpeta 
+`assets`, dejamos una de un auto rojo para que tengan de 
+ejemplo.
 
 #### Sugerencia (que pueden tomar o no)
   
-Acá puede venir bien tener objetos que representen a cada color, p.ej. 
+Acá puede venir bien tener objetos que representen a cada 
+color, p.ej. 
 ```
 object blanco { }
 object rojo { }
@@ -146,7 +224,9 @@ object beige { }
 object negro { }
 object verde { }
 ```
-y agregarle a cada color una consulta para que te diga el nombre de la imagen. Así se evitan los "if" en el método `image()` en la clase de los Corsa.
+y agregarle a cada color una consulta para que te diga el 
+nombre de la imagen. Así se evitan los "if" en el método 
+`image()` en la clase de los Corsa.
 
 P.ej. 
 ```
